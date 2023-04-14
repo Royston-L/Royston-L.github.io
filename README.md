@@ -23,8 +23,8 @@ To be the first player to connect 4 of the same colored discs in a row (either v
      4.  Function to check whether the wining move was created (checkWinner). i.e. connected 4 disk of the same color (vertically, horizontally or diagonally). Call another function to declare who is the winner (setWinner). 
      5.  Function to declare the winner (setWinner).
      6.  Uses sliding window method to check for winner.
-        
-    (http://royston-l.github.io/64372755/232069267-30562a7e-53a7-4857-84a9-2689070baefc.png)
+ 
+![Horizontal_Vertical](https://user-images.githubusercontent.com/64372755/232087246-d7373c5c-5f76-4b16-bd92-c08593e7bc1a.png)
 
 <img align="left" width="200" height="200" src=https://user-images.githubusercontent.com/64372755/230723779-db5f6f40-5662-4d99-8a8a-22fdf22cef5a.png>
 
