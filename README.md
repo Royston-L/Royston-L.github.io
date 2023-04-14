@@ -25,9 +25,7 @@ To be the first player to connect 4 of the same colored discs in a row (either v
      6.  Uses sliding window method to check for winner.
  
 ![Horizontal_Vertical](https://user-images.githubusercontent.com/64372755/232087246-d7373c5c-5f76-4b16-bd92-c08593e7bc1a.png)
-
-(https://user-images.githubusercontent.com/64372755/230723785-125b8fb7-9cf1-4959-a9a3-eb42e0d49107.png)
-    
-<img align="left" width="200" height="200" src=https://user-images.githubusercontent.com/64372755/230723798-b2f92aa4-5e14-4021-ac74-bdba0bd89bc1.png>
-
-     
+ 
+![Diagonal_Forward](https://user-images.githubusercontent.com/64372755/232089158-253642bb-4a40-4cbd-9c09-105541dfc961.png)
+ 
+![Diagonal_Backward](https://user-images.githubusercontent.com/64372755/232089233-51b1a593-4d66-458b-82a8-19721f565d35.png)
