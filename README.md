@@ -24,9 +24,8 @@ To be the first player to connect 4 of the same colored discs in a row (either v
      5.  Function to declare the winner (setWinner).
      6.  Uses sliding window method to check for winner.
         
-    (../https://github.com/Royston-L.github.io/64372755/232069267-30562a7e-53a7-4857-84a9-2689070baefc.png)
-    
-    
+    (../https://royston-l.github.io/64372755/232069267-30562a7e-53a7-4857-84a9-2689070baefc.png)
+
 ![Horizontal_Vertical](<img align="left" width="200" height="200" src=https://user-images.githubusercontent.com/64372755/230723779-db5f6f40-5662-4d99-8a8a-22fdf22cef5a.png>)
 
 ![Diagonal_Forward](https://user-images.githubusercontent.com/64372755/230723785-125b8fb7-9cf1-4959-a9a3-eb42e0d49107.png)
