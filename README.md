@@ -28,9 +28,9 @@ To be the first player to connect 4 of the same colored discs in a row (either v
     
     
 <img align="left" width="200" height="200" src=https://user-images.githubusercontent.com/64372755/230723779-db5f6f40-5662-4d99-8a8a-22fdf22cef5a.png>
+
+<img align="left" width="200" height="200" src=https://user-images.githubusercontent.com/64372755/230723785-125b8fb7-9cf1-4959-a9a3-eb42e0d49107.png>
     
-    <img align="left" width="200" height="200" src=https://user-images.githubusercontent.com/64372755/230723785-125b8fb7-9cf1-4959-a9a3-eb42e0d49107.png>
-    
-    <img align="left" width="200" height="200" src=https://user-images.githubusercontent.com/64372755/230723798-b2f92aa4-5e14-4021-ac74-bdba0bd89bc1.png>
+<img align="left" width="200" height="200" src=https://user-images.githubusercontent.com/64372755/230723798-b2f92aa4-5e14-4021-ac74-bdba0bd89bc1.png>
 
      
