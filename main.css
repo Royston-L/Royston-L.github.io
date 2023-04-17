@@ -48,3 +48,24 @@ button {
     margin: 4px;
     padding: 4px;
 }
+
+#gameState {
+    color: blue;
+    animation: blinker 1s linear infinite;
+  }
+  
+  @keyframes blinker {  
+    100% { opacity: 0; }
+  }
+
+  #firstPlayercountdown,  #secondPlayercountdown {
+    display: inline-block;
+    padding: 30px;
+    border: 1px solid red;
+    color: black;
+    animation: blinker 1s linear infinite;
+  }
+  
+  @keyframes blinker {  
+    100% { opacity: 0; }
+  }
