@@ -39,7 +39,7 @@ function setGame() {
     board = [];
     // Preset row value to the last row, 5, for all 7 columns.  
     currColumns = [5, 5, 5, 5, 5, 5, 5];
-   
+
     for (let r = 0; r < rows; r++) {
         let row = [];
         for (let c = 0; c < columns; c++) {
@@ -71,21 +71,26 @@ function setGame() {
 
         board.push(row);
     }
-    
+    let timing1 = document.createElement("h2");
+    timing1.setAttribute("id", 'firstPlayercountdown');
+    document.getElementById("timing").append(timing1);
+    let timing2 = document.createElement("h2");
+    timing2.setAttribute("id", 'secondPlayercountdown');
+    document.getElementById("timing").append(timing2);
 };
 
 function setPiece() {
     if (gameOver) {
         return;
     }
-    
+
     clearTimeout(timeOut);
     // extract coordinates information from tile's <div> id.
     // 'this' refers to the tile element. 
     // convert the id from a single string to character and store in array
     // to be used as actual integer coordinates by converting the characters in array.
     // use parsInt to convert from string to integer.
-    
+
     let coords = this.id.split("-"); // "0 - 0" => ["0", "0"]
     let r = parseInt(coords[0]);
     let c = parseInt(coords[1]);
@@ -103,19 +108,19 @@ function setPiece() {
         currPlayer = firstPlayer.charAt(0);
         turn = false;
         timeOut = setTimeout(loseATurn, 5000);
-        target = 6000;
-        current = 0;
-        countdown(target, current);
+        target1 = 6000;
+        current1 = 0;
+        firstPlayercountdown(target1, current1);
     } else {
         currPlayer = secondPlayer.charAt(0);
         turn = true;
         timeOut = setTimeout(loseATurn, 5000);
-        target = 6000;
-        current = 0;
-        countdown(target, current);
+        target2 = 6000;
+        current2 = 0;
+        secondPlayercountdown(target2, current2);
     };
 
-    board[r][c] = currPlayer;  
+    board[r][c] = currPlayer;
     let tile = document.getElementById(r.toString() + "-" + c.toString());
     if (currPlayer == playerRed) {
         // set the current element (tile) to css attribute of red piece, which is red. 
@@ -126,7 +131,7 @@ function setPiece() {
     } else if (currPlayer == playerLime) {
         // set the current element (tile) to css attribute of lime piece, which is lime. 
         tile.classList.add("lime-piece")
-    } else if (currPlayer == playerFuchsia){
+    } else if (currPlayer == playerFuchsia) {
         // set the current element (tile) to css attribute of fuchsia piece, which is fuchsia. 
         tile.classList.add("fuchsia-piece")
     }
@@ -184,18 +189,33 @@ function hide() {
     };
 }
 
-function countdown() {
-    current += 1000;
-    let diff = target - current;
-    let sec = (diff/1000);
-    
-    if (diff === 0) {
+function firstPlayercountdown() {
+    current1 += 1000;
+    let diff1 = target1 - current1;
+    let sec1 = (diff1 / 1000);
+
+    if (diff1 === 0) {
         return;
     };
 
-    document.getElementById('countdown').innerText = sec;
-    if (diff > 1) {
-        setTimeout(countdown, 1000);
+    document.getElementById('firstPlayercountdown').innerText = sec1;
+    if (diff1 > 0) {
+        setTimeout(firstPlayercountdown, 1000);
+    }
+};
+
+function secondPlayercountdown() {
+    current2 += 1000;
+    let diff2 = target2 - current2;
+    let sec2 = (diff2 / 1000);
+
+    if (diff2 === 0) {
+        return;
+    };
+
+    document.getElementById('secondPlayercountdown').innerText = sec2;
+    if (diff2 > 0) {
+        setTimeout(secondPlayercountdown, 1000);
     }
 };
 
@@ -279,7 +299,8 @@ function setWinner(r, c) {
     else {
         winner.innerText = "Fuchsia Wins";
     };
-    document.getElementById("countdown").style.display = "none";
-    document.getElementById("gameState").innerText ='Game Over';
+    document.getElementById("firstPlayercountdown").style.display = "none";
+    document.getElementById("secondPlayercountdown").style.display = "none";
+    document.getElementById("gameState").innerText = 'Game Over';
     gameOver = true;
 }
