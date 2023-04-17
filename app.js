@@ -20,6 +20,10 @@ let rows = 6;
 let columns = 7;
 let counter = 0;
 let turn = true;
+
+// let target = 6000;
+// let current = 0;
+let timeOut = setTimeout(loseATurn, 5000);
 // window.onload, by default, is fired when the entire page loads, including its content (images, CSS, scripts, etc.).
 // In some browsers it now takes over the role of document.onload and fires when the DOM is ready as well.
 
@@ -28,14 +32,14 @@ let turn = true;
 
 window.onload = function () {
     setButtonChoices(buttonAttributes);
-    setGame();
+    // setGame();
 };
 
 function setGame() {
     board = [];
     // Preset row value to the last row, 5, for all 7 columns.  
     currColumns = [5, 5, 5, 5, 5, 5, 5];
-   
+
     for (let r = 0; r < rows; r++) {
         let row = [];
         for (let c = 0; c < columns; c++) {
@@ -67,7 +71,12 @@ function setGame() {
 
         board.push(row);
     }
-    
+    let timing1 = document.createElement("h2");
+    timing1.setAttribute("id", 'firstPlayercountdown');
+    document.getElementById("timing").append(timing1);
+    let timing2 = document.createElement("h2");
+    timing2.setAttribute("id", 'secondPlayercountdown');
+    document.getElementById("timing").append(timing2);
 };
 
 function setPiece() {
@@ -75,34 +84,43 @@ function setPiece() {
         return;
     }
 
+    clearTimeout(timeOut);
     // extract coordinates information from tile's <div> id.
     // 'this' refers to the tile element. 
     // convert the id from a single string to character and store in array
     // to be used as actual integer coordinates by converting the characters in array.
     // use parsInt to convert from string to integer.
+
     let coords = this.id.split("-"); // "0 - 0" => ["0", "0"]
     let r = parseInt(coords[0]);
     let c = parseInt(coords[1]);
 
-    // select from line 25, the value 5 from the array's value at c.
+    // select from array currColumns, the value 5 from the array's value at c.
     r = currColumns[c];
     // At r = 0, this is the top row, therefore no more tiles can be added.
     if (r < 0) {
         return;
     }
 
-    // Condition block to take turns
+    // Condition block to take turns.
+    // Extract first letter of currPlayers choosen color.
     if (turn === true) {
         currPlayer = firstPlayer.charAt(0);
         turn = false;
-        setTimeout(loseATurn, 5000);
+        timeOut = setTimeout(loseATurn, 5000);
+        target1 = 6000;
+        current1 = 0;
+        firstPlayercountdown(target1, current1);
     } else {
         currPlayer = secondPlayer.charAt(0);
         turn = true;
-        setTimeout(loseATurn, 5000);
+        timeOut = setTimeout(loseATurn, 5000);
+        target2 = 6000;
+        current2 = 0;
+        secondPlayercountdown(target2, current2);
     };
 
-    board[r][c] = currPlayer; // Extract first letter of currPlayers choosen color. 
+    board[r][c] = currPlayer;
     let tile = document.getElementById(r.toString() + "-" + c.toString());
     if (currPlayer == playerRed) {
         // set the current element (tile) to css attribute of red piece, which is red. 
@@ -113,12 +131,12 @@ function setPiece() {
     } else if (currPlayer == playerLime) {
         // set the current element (tile) to css attribute of lime piece, which is lime. 
         tile.classList.add("lime-piece")
-    } else if (currPlayer == playerFuchsia){
+    } else if (currPlayer == playerFuchsia) {
         // set the current element (tile) to css attribute of fuchsia piece, which is fuchsia. 
         tile.classList.add("fuchsia-piece")
     }
     // console.log(board); For testing. To display the player selection
-    //update the row height. Since previous row is occupied, 
+    // update the row height. Since previous row is occupied, 
     // update the value to place the next selection at a row above current row.
     r -= 1
 
@@ -137,7 +155,7 @@ function setPiece() {
 //   }
 
 
-// function setButtonChoices creates the following buttons and theor attributes:
+// function setButtonChoices creates the following buttons and other attributes:
 // <button id = "red-piece" style="background-color:red" class="button">Red</button>
 // <button id = "yellow-piece" style="background-color:yellow"; class="button">Yellow</button>
 // <button id = "lime-piece" style="background-color:lime"; class="button">Lime</button>
@@ -167,8 +185,39 @@ function hide() {
         document.getElementById("buttons").style.display = "none";
         document.getElementById("select color").style.display = "none";
         counter = 0;
+        setGame();
     };
 }
+
+function firstPlayercountdown() {
+    current1 += 1000;
+    let diff1 = target1 - current1;
+    let sec1 = (diff1 / 1000);
+
+    if (diff1 === 0) {
+        return;
+    };
+
+    document.getElementById('firstPlayercountdown').innerText = sec1;
+    if (diff1 > 0) {
+        setTimeout(firstPlayercountdown, 1000);
+    }
+};
+
+function secondPlayercountdown() {
+    current2 += 1000;
+    let diff2 = target2 - current2;
+    let sec2 = (diff2 / 1000);
+
+    if (diff2 === 0) {
+        return;
+    };
+
+    document.getElementById('secondPlayercountdown').innerText = sec2;
+    if (diff2 > 0) {
+        setTimeout(secondPlayercountdown, 1000);
+    }
+};
 
 function loseATurn() {
     if (turn === true) {
@@ -179,19 +228,25 @@ function loseATurn() {
 };
 
 function checkWinner() {
-    // check horizontally. Use 'sliding window' method.
+    // check horizontally across columns. Use 'sliding window' method.
+    // checks from row 0 to 5; top to bottom
+    // for each row check from column 0 to column 3, at the 3rd column, stop because
+    // the rest of the condition statement will compare columns at 4th (c+1), 5th (c+2) and 6th (c+3) place  
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns - 3; c++) {
             if (board[r][c] != ' ') {
-                if (board[r][c] == board[c][c + 1] && board[r][c + 1] == board[r][c + 2] && board[r][c + 2] == board[r][c + 3]) {
+                if (board[r][c] == board[r][c + 1] && board[r][c + 1] == board[r][c + 2] && board[r][c + 2] == board[r][c + 3]) {
                     setWinner(r, c);
                     return;
                 }
             }
         }
     }
-    // check vertically. 
-    for (let c = 0; c < columns - 3; c++) {
+    // check vertically, downwards. Use 'sliding window' method.
+    // check from coumn 0 to 6, left to right
+    // for each column check from row 0 to row 3, at the 3rd row, stop because
+    // the rest of the condition statement will compare rows at 4th (r+1), 5th (r+2) and 6th (r+3) place
+    for (let c = 0; c < columns; c++) {
         for (let r = 0; r < rows - 3; r++) {
             if (board[r][c] != " ") {
                 if (board[r][c] == board[r + 1][c] && board[r + 1][c] == board[r + 2][c] && board[r + 2][c] == board[r + 3][c]) {
@@ -202,6 +257,9 @@ function checkWinner() {
         }
     }
     // check anti-diagonally (back slash)
+    // exclude checking tiles with coordinates (3,0), (4,0), (4,1), (5,0), (5,1), (5,2); bottom left corner of board 
+    // (0,4), (0,5), (0,6), (1,5), (1,6), (2,6); top right corner of board.
+    // those corners cannot form 4 tiles in a row anti-diagonally  
     for (let r = 0; r < rows - 3; r++) {
         for (let c = 0; c < columns - 3; c++) {
             if (board[r][c] != " ") {
@@ -213,6 +271,9 @@ function checkWinner() {
         }
     }
     // check diagonally (forward slash)
+    // exclude checking tiles with coordinates (3,7), (4,7), (5,7), (4,6), (5,4), (5,3); bottom right corner of board 
+    // (0,0), (0,1), (0,2), (1,0), (1,1), (2,0); top left corner of board.
+    // those corners cannot form 4 tiles in a row diagonally  
     for (let r = 3; r < rows; r++) {
         for (let c = 0; c < columns - 3; c++) {
             if (board[r][c] != " ") {
@@ -238,5 +299,8 @@ function setWinner(r, c) {
     else {
         winner.innerText = "Fuchsia Wins";
     };
+    document.getElementById("firstPlayercountdown").style.display = "none";
+    document.getElementById("secondPlayercountdown").style.display = "none";
+    document.getElementById("gameState").innerText = 'Game Over';
     gameOver = true;
 }
