@@ -84,14 +84,15 @@ function setPiece() {
     let r = parseInt(coords[0]);
     let c = parseInt(coords[1]);
 
-    // select from line 25, the value 5 from the array's value at c.
+    // select from array currColumns, the value 5 from the array's value at c.
     r = currColumns[c];
     // At r = 0, this is the top row, therefore no more tiles can be added.
     if (r < 0) {
         return;
     }
 
-    // Condition block to take turns
+    // Condition block to take turns.
+    // Extract first letter of currPlayers choosen color.
     if (turn === true) {
         currPlayer = firstPlayer.charAt(0);
         turn = false;
@@ -102,7 +103,7 @@ function setPiece() {
         setTimeout(loseATurn, 5000);
     };
 
-    board[r][c] = currPlayer; // Extract first letter of currPlayers choosen color. 
+    board[r][c] = currPlayer;  
     let tile = document.getElementById(r.toString() + "-" + c.toString());
     if (currPlayer == playerRed) {
         // set the current element (tile) to css attribute of red piece, which is red. 
@@ -118,7 +119,7 @@ function setPiece() {
         tile.classList.add("fuchsia-piece")
     }
     // console.log(board); For testing. To display the player selection
-    //update the row height. Since previous row is occupied, 
+    // update the row height. Since previous row is occupied, 
     // update the value to place the next selection at a row above current row.
     r -= 1
 
@@ -137,7 +138,7 @@ function setPiece() {
 //   }
 
 
-// function setButtonChoices creates the following buttons and theor attributes:
+// function setButtonChoices creates the following buttons and other attributes:
 // <button id = "red-piece" style="background-color:red" class="button">Red</button>
 // <button id = "yellow-piece" style="background-color:yellow"; class="button">Yellow</button>
 // <button id = "lime-piece" style="background-color:lime"; class="button">Lime</button>
@@ -179,19 +180,25 @@ function loseATurn() {
 };
 
 function checkWinner() {
-    // check horizontally. Use 'sliding window' method.
+    // check horizontally across columns. Use 'sliding window' method.
+    // checks from row 0 to 5; top to bottom
+    // for each row check from column 0 to column 3, at the 3rd column, stop because
+    // the rest of the condition statement will compare columns at 4th (c+1), 5th (c+2) and 6th (c+3) place  
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < columns - 3; c++) {
             if (board[r][c] != ' ') {
-                if (board[r][c] == board[c][c + 1] && board[r][c + 1] == board[r][c + 2] && board[r][c + 2] == board[r][c + 3]) {
+                if (board[r][c] == board[r][c + 1] && board[r][c + 1] == board[r][c + 2] && board[r][c + 2] == board[r][c + 3]) {
                     setWinner(r, c);
                     return;
                 }
             }
         }
     }
-    // check vertically. 
-    for (let c = 0; c < columns - 3; c++) {
+    // check vertically, downwards. Use 'sliding window' method.
+    // check from coumn 0 to 6, left to right
+    // for each column check from row 0 to row 3, at the 3rd row, stop because
+    // the rest of the condition statement will compare rows at 4th (r+1), 5th (r+2) and 6th (r+3) place
+    for (let c = 0; c < columns; c++) {
         for (let r = 0; r < rows - 3; r++) {
             if (board[r][c] != " ") {
                 if (board[r][c] == board[r + 1][c] && board[r + 1][c] == board[r + 2][c] && board[r + 2][c] == board[r + 3][c]) {
@@ -202,6 +209,9 @@ function checkWinner() {
         }
     }
     // check anti-diagonally (back slash)
+    // exclude checking tiles with coordinates (3,0), (4,0), (4,1), (5,0), (5,1), (5,2); bottom left corner of board 
+    // (0,4), (0,5), (0,6), (1,5), (1,6), (2,6); top right corner of board.
+    // those corners cannot form 4 tiles in a row anti-diagonally  
     for (let r = 0; r < rows - 3; r++) {
         for (let c = 0; c < columns - 3; c++) {
             if (board[r][c] != " ") {
@@ -213,6 +223,9 @@ function checkWinner() {
         }
     }
     // check diagonally (forward slash)
+    // exclude checking tiles with coordinates (3,7), (4,7), (5,7), (4,6), (5,4), (5,3); bottom right corner of board 
+    // (0,0), (0,1), (0,2), (1,0), (1,1), (2,0); top left corner of board.
+    // those corners cannot form 4 tiles in a row diagonally  
     for (let r = 3; r < rows; r++) {
         for (let c = 0; c < columns - 3; c++) {
             if (board[r][c] != " ") {
@@ -238,5 +251,6 @@ function setWinner(r, c) {
     else {
         winner.innerText = "Fuchsia Wins";
     };
+    document.getElementById("gameState").innerText ='Game Over';
     gameOver = true;
 }
