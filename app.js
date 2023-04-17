@@ -21,8 +21,9 @@ let columns = 7;
 let counter = 0;
 let turn = true;
 
-let target = 6000;
-let current = 0;
+// let target = 6000;
+// let current = 0;
+let timeOut = setTimeout(loseATurn, 5000);
 // window.onload, by default, is fired when the entire page loads, including its content (images, CSS, scripts, etc.).
 // In some browsers it now takes over the role of document.onload and fires when the DOM is ready as well.
 
@@ -31,7 +32,7 @@ let current = 0;
 
 window.onload = function () {
     setButtonChoices(buttonAttributes);
-    setGame();
+    // setGame();
 };
 
 function setGame() {
@@ -77,13 +78,14 @@ function setPiece() {
     if (gameOver) {
         return;
     }
-
+    
+    clearTimeout(timeOut);
     // extract coordinates information from tile's <div> id.
     // 'this' refers to the tile element. 
     // convert the id from a single string to character and store in array
     // to be used as actual integer coordinates by converting the characters in array.
     // use parsInt to convert from string to integer.
-    countdown();
+    
     let coords = this.id.split("-"); // "0 - 0" => ["0", "0"]
     let r = parseInt(coords[0]);
     let c = parseInt(coords[1]);
@@ -100,13 +102,17 @@ function setPiece() {
     if (turn === true) {
         currPlayer = firstPlayer.charAt(0);
         turn = false;
-        
-        setTimeout(loseATurn, 5000);
+        timeOut = setTimeout(loseATurn, 5000);
+        target = 6000;
+        current = 0;
+        countdown(target, current);
     } else {
         currPlayer = secondPlayer.charAt(0);
         turn = true;
-        // countdown();
-        setTimeout(loseATurn, 5000);
+        timeOut = setTimeout(loseATurn, 5000);
+        target = 6000;
+        current = 0;
+        countdown(target, current);
     };
 
     board[r][c] = currPlayer;  
@@ -174,6 +180,7 @@ function hide() {
         document.getElementById("buttons").style.display = "none";
         document.getElementById("select color").style.display = "none";
         counter = 0;
+        setGame();
     };
 }
 
@@ -182,8 +189,7 @@ function countdown() {
     let diff = target - current;
     let sec = (diff/1000);
     
-    if (diff === 0){
-        current = 0;
+    if (diff === 0) {
         return;
     };
 
