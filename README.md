@@ -1,6 +1,6 @@
 # Connect 4 Game
 The technologies used for the game are html, css and Javascript.
-
+Credits: Kenny Yip Coding ![How to Build Connect 4 with Javascript HTML CSS](https://www.youtube.com/watch?v=4ARsthVnCTg)
 ## Game Rules according to M. Bradley & Hasbro.
 ## Ojective:
 To be the first player to connect 4 of the same colored discs in a row (either vertically, horizontally, or diagonally).
