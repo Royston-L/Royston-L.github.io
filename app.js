@@ -20,9 +20,7 @@ let rows = 6;
 let columns = 7;
 let counter = 0;
 let turn = true;
-
-// let target = 6000;
-// let current = 0;
+let countdownId = " ";
 let timeOut = setTimeout(loseATurn, 5000);
 // window.onload, by default, is fired when the entire page loads, including its content (images, CSS, scripts, etc.).
 // In some browsers it now takes over the role of document.onload and fires when the DOM is ready as well.
@@ -32,7 +30,6 @@ let timeOut = setTimeout(loseATurn, 5000);
 
 window.onload = function () {
     setButtonChoices(buttonAttributes);
-    // setGame();
 };
 
 function setGame() {
@@ -107,33 +104,43 @@ function setPiece() {
     if (turn === true) {
         currPlayer = firstPlayer.charAt(0);
         turn = false;
-        timeOut = setTimeout(loseATurn, 5000);
         target1 = 6000;
         current1 = 0;
+        countdownId = "firstPlayercountdown";
         firstPlayercountdown(target1, current1);
+        timeOut = setTimeout(loseATurn, 5000);
     } else {
         currPlayer = secondPlayer.charAt(0);
         turn = true;
-        timeOut = setTimeout(loseATurn, 5000);
         target2 = 6000;
         current2 = 0;
+        countdownId = "secondPlayercountdown";
         secondPlayercountdown(target2, current2);
+        timeOut = setTimeout(loseATurn, 5000);
     };
 
     board[r][c] = currPlayer;
     let tile = document.getElementById(r.toString() + "-" + c.toString());
     if (currPlayer == playerRed) {
-        // set the current element (tile) to css attribute of red piece, which is red. 
+        // set the current element (tile) to css attribute of red piece, which is red.
+        // change countdown timer backround to the same color as current element (tile).   
         tile.classList.add("red-piece")
+        document.getElementById(countdownId).classList.add("red-piece");
     } else if (currPlayer == playerYellow) {
         // set the current element (tile) to css attribute of yellow piece, which is yellow. 
+        // change countdown timer backround to the same color as current element (tile).
         tile.classList.add("yellow-piece")
+        document.getElementById(countdownId).classList.add("yellow-piece");
     } else if (currPlayer == playerLime) {
         // set the current element (tile) to css attribute of lime piece, which is lime. 
+        // change countdown timer backround to the same color as current element (tile).
         tile.classList.add("lime-piece")
+        document.getElementById(countdownId).classList.add("lime-piece");
     } else if (currPlayer == playerFuchsia) {
         // set the current element (tile) to css attribute of fuchsia piece, which is fuchsia. 
+        // change countdown timer backround to the same color as current element (tile).
         tile.classList.add("fuchsia-piece")
+        document.getElementById(countdownId).classList.add("fuchsia-piece");
     }
     // console.log(board); For testing. To display the player selection
     // update the row height. Since previous row is occupied, 
@@ -146,14 +153,6 @@ function setPiece() {
 
     checkWinner();
 }
-
-// function myFunction() {
-//     let x = document.getElementById("myDIV");
-//     if (window.getComputedStyle(x).display === "none") {
-//       // Do something..
-//     }
-//   }
-
 
 // function setButtonChoices creates the following buttons and other attributes:
 // <button id = "red-piece" style="background-color:red" class="button">Red</button>
@@ -175,7 +174,6 @@ function setButtonChoices(buttonAttributes) {
 
 function hide() {
     counter += 1;
-    turn += 1;
     if (counter === 1) {
         firstPlayer = this.innerText;
         this.style.display = 'none';
@@ -194,12 +192,12 @@ function firstPlayercountdown() {
     let diff1 = target1 - current1;
     let sec1 = (diff1 / 1000);
 
-    if (diff1 === 0) {
+    if (diff1 <= 0) {
         return;
     };
 
-    document.getElementById('firstPlayercountdown').innerText = sec1;
     if (diff1 > 0) {
+        document.getElementById('firstPlayercountdown').innerText = sec1;
         setTimeout(firstPlayercountdown, 1000);
     }
 };
@@ -209,12 +207,12 @@ function secondPlayercountdown() {
     let diff2 = target2 - current2;
     let sec2 = (diff2 / 1000);
 
-    if (diff2 === 0) {
+    if (diff2 <= 0) {
         return;
     };
 
-    document.getElementById('secondPlayercountdown').innerText = sec2;
     if (diff2 > 0) {
+        document.getElementById('secondPlayercountdown').innerText = sec2;
         setTimeout(secondPlayercountdown, 1000);
     }
 };
