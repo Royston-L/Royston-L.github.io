@@ -23,9 +23,9 @@ let countdownId = " ";
 let timeOut = setTimeout(loseATurn, 5000);
 
 let current1 = 0;
-let target1 = 0;
+let target1 = 6000;
 let current2 = 0;
-let target2 = 0;
+let target2 = 6000;
 // window.onload, by default, is fired when the entire page loads, including its content (images, CSS, scripts, etc.).
 // In some browsers it now takes over the role of document.onload and fires when the DOM is ready as well.
 
@@ -108,16 +108,16 @@ function setPiece() {
     if (turn === true) {
         currPlayer = firstPlayer.charAt(0);
         turn = false;
-        target1 = 6000;
-        current1 = 0;
+//         target1 = 6000;
+//         current1 = 0;
         countdownId = "firstPlayercountdown";
         firstPlayercountdown(target1, current1);
         timeOut = setTimeout(loseATurn, 5000);
     } else {
         currPlayer = secondPlayer.charAt(0);
         turn = true;
-        target2 = 6000;
-        current2 = 0;
+//         target2 = 6000;
+//         current2 = 0;
         countdownId = "secondPlayercountdown";
         secondPlayercountdown(target2, current2);
         timeOut = setTimeout(loseATurn, 5000);
