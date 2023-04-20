@@ -15,13 +15,17 @@ let buttonAttributes = [
 let gameOver = false;
 let board;
 let currColumns;
-
 let rows = 6;
 let columns = 7;
 let counter = 0;
 let turn = true;
 let countdownId = " ";
 let timeOut = setTimeout(loseATurn, 5000);
+
+let current1 = 0;
+let target1 = 0;
+let current2 = 0;
+let target2 = 0;
 // window.onload, by default, is fired when the entire page loads, including its content (images, CSS, scripts, etc.).
 // In some browsers it now takes over the role of document.onload and fires when the DOM is ready as well.
 
