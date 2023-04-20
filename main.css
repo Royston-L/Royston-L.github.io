@@ -63,9 +63,9 @@ button {
     padding: 30px;
     border: 1px solid red;
     color: black;
-    animation: blinker 1s linear infinite;
+/*     animation: blinker 1s linear infinite; */
   }
   
-  @keyframes blinker {  
+/*   @keyframes blinker {  
     100% { opacity: 0; }
-  }
+  } */
